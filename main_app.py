@@ -133,10 +133,12 @@ else:
     
     vectorizer = TfidfVectorizer()
     LR_data = preprocess_text(sentence)
-    LR_data = vectorizer.transform(" ".join(tokens))
+    LR_data = nltk.word_tokenize(LR_data)
+    LR_data = remove_stopwords(LR_data)
+    LR_data = vectorizer.transform(" ".join(LR_data))
     prediction3 = model3.predict(LR_data)
     
-    for sentence, label in zip(predcorpus, test_predictions):
+    for output3, label in zip(predcorpus, prediction3):
       if label == 0:
           output3 = 'Sarcasm Detected'
       else:
