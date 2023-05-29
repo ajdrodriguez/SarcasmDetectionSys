@@ -10,6 +10,37 @@ voc_size=5000
 max_sent_length = 20
 prediction1 = 0
 prediction2 = 0
+stop_words = set(nltk.corpus.stopwords.words('english'))
+
+def clean_text(text):
+    # Remove HTML tags
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', text)
+    
+    # Remove special characters and punctuation
+    clean_text = re.sub('[^a-zA-Z]', ' ', cleantext)
+    
+    # Convert to lowercase
+    clean_text = clean_text.lower()
+    
+    return clean_text
+  
+def remove_stopwords(tokens):
+    filtered_tokens = [word for word in tokens if word not in stop_words]
+    return filtered_tokens
+
+def lemmatize_tokens(tokens):
+    lemmatizer = WordNetLemmatizer()
+    tagged = nltk.pos_tag(tokens)
+    lemmatized_tokens = [lemmatizer.lemmatize(word, get_wordnet_pos(pos_tag)) for (word, pos_tag) in tagged]
+    return lemmatized_tokens
+
+def preprocess_text(text):
+    cleaned_text = clean_text(text)
+    tokenized_text = nltk.word_tokenize(cleaned_text)
+    filtered_tokens = remove_stopwords(tokenized_text)
+    lemmatized_tokens = lemmatize_tokens(filtered_tokens)
+    return " ".join(lemmatized_tokens)
 
 def load_LSTM_model():
   LSTMmodel=tf.keras.models.load_model('models/LSTMModel.hdf5')
@@ -76,24 +107,21 @@ else:
         output2 = 'No Sarcasm Detected'
     prediction2 = (str(prediction2[0][0]*100))+'%'
     
-    prediction3 = model3.predict(embedded_docs)
-    pred_labels3 = []
-    if prediction3 >= 0.5:
-        pred_labels3.append(1)
-    else:
-        pred_labels3.append(0)
-    if pred_labels3[0] == 1:
-        output3 = 'Sarcasm Detected'
-    else:
-        output3 = 'No Sarcasm Detected'
-    prediction3 = (str(prediction3[0][0]*100))+'%'
+    LR_data = preprocess_text(sentence)
+    LR_data = vectorizer.transform(LR_data)
+    prediction3 = model3.predict(LR_data)
+    
+    for sentence, label in zip(predcorpus, test_predictions):
+      if label == 0:
+          output3 = 'Sarcasm Detected'
+      else:
+          output3 = 'No Sarcasm Detected'
     
     st.write("Prediction Accuracy (LSTM): ", prediction1)
     st.write("Prediction Accuracy (CNN): ", prediction2)
-    st.write("Prediction Accuracy (LR): ", prediction3)
     string1="OUTPUT OF LSTM: "+output1
     string2="OUTPUT OF CNN: "+output2
-    string3="OUTPUT OF CNN: "+output3
+    string3="OUTPUT OF LR: "+output3
     st.success(string1)
     st.success(string2)
     st.success(string3)
