@@ -39,6 +39,19 @@ def remove_stopwords(tokens):
     filtered_tokens = [word for word in tokens if word not in stop_words]
     return filtered_tokens
 
+def get_wordnet_pos(treebank_tag):
+    """Map POS tag to first character used by WordNetLemmatizer"""
+    if treebank_tag.startswith('J'):
+        return wordnet.ADJ
+    elif treebank_tag.startswith('V'):
+        return wordnet.VERB
+    elif treebank_tag.startswith('N'):
+        return wordnet.NOUN
+    elif treebank_tag.startswith('R'):
+        return wordnet.ADV
+    else:
+        return wordnet.NOUN  # default to noun
+
 def lemmatize_tokens(tokens):
     lemmatizer = WordNetLemmatizer()
     tagged = nltk.pos_tag(tokens)
