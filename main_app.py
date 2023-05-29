@@ -7,6 +7,7 @@ from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.preprocessing.text import one_hot
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 import h5py
 
@@ -130,6 +131,7 @@ else:
         output2 = 'No Sarcasm Detected'
     prediction2 = (str(prediction2[0][0]*100))+'%'
     
+    vectorizer = TfidfVectorizer()
     LR_data = preprocess_text(sentence)
     LR_data = vectorizer.transform(LR_data)
     prediction3 = model3.predict(LR_data)
