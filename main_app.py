@@ -133,7 +133,7 @@ else:
     
     vectorizer = TfidfVectorizer()
     LR_data = preprocess_text(sentence)
-    LR_data = vectorizer.fit_transform(LR_data)
+    LR_data = vectorizer.transform(" ".join())
     prediction3 = model3.predict(LR_data)
     
     for sentence, label in zip(predcorpus, test_predictions):
