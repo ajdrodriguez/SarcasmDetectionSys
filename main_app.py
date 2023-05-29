@@ -17,8 +17,23 @@ def load_CNN_model():
   CNNModel=tf.keras.models.load_model('models/cnnmodel.hdf5')
   return CNNModel
 
+def load_LR_model():
+  filename = 'models/logistic_regression_model.h5'
+  LRModel = LogisticRegression()
+  
+  with h5py.File(filename, 'r') as f:
+    # Access the 'model' group
+    grp = f['classifier']
+    
+    # Load the model's parameters
+    LRModel.coef_ = grp['coef_'][:]
+    LRModel.intercept_ = grp['intercept_'][:]
+
+  return LRModel
+
 model1=load_LSTM_model()
 model2=load_CNN_model()
+model3=load_LR_model()
 
 st.write("""# Sarcasm Detection System""")
 st.write("""### Developed by CPE32S4 - Group 4""")
@@ -28,6 +43,7 @@ if sentence == '':
     st.text("No sentence found. Please enter.")
     prediction1 = 0
     prediction2 = 0
+    prediction3 = 0
 else:
     st.write('Inputted Sentence: ', sentence)
     predcorpus = [sentence]
@@ -45,9 +61,7 @@ else:
     else:
         output1 = 'No Sarcasm Detected'
     prediction1 = (str(prediction1[0][0]*100))+'%'
-
-
-
+    
     prediction2 = model2.predict(embedded_docs)
     pred_labels2 = []
     if prediction2 >= 0.5:
@@ -58,15 +72,31 @@ else:
         output2 = 'Sarcasm Detected'
     else:
         output2 = 'No Sarcasm Detected'
-
     prediction2 = (str(prediction2[0][0]*100))+'%'
+    
+    prediction3 = model3.predict(embedded_docs)
+    pred_labels3 = []
+    if prediction3 >= 0.5:
+        pred_labels3.append(1)
+    else:
+        pred_labels3.append(0)
+    if pred_labels3[0] == 1:
+        output3 = 'Sarcasm Detected'
+    else:
+        output3 = 'No Sarcasm Detected'
+    prediction3 = (str(prediction3[0][0]*100))+'%'
+    
     st.write("Prediction Accuracy (LSTM): ", prediction1)
     st.write("Prediction Accuracy (CNN): ", prediction2)
+    st.write("Prediction Accuracy (LR): ", prediction3)
     string1="OUTPUT OF LSTM: "+output1
     string2="OUTPUT OF CNN: "+output2
+    string3="OUTPUT OF CNN: "+output3
     st.success(string1)
     st.success(string2)
-
+    st.success(string3)
+    
+    
 st.write("")
 st.write("")
 st.markdown(
