@@ -46,8 +46,8 @@ else:
         output1 = 'Sarcasm Detected'
     else:
         output1 = 'No Sarcasm Detected'
-    prediction1 = round(prediction1, 4)
-    prediction1 = (str(prediction1[0][0]*100))+'%'
+    prediction1 = round(prediction1[0][0], 4)
+    prediction1 = (str(prediction1*100))+'%'
     
     prediction2 = model2.predict(embedded_docs)
     pred_labels2 = []
@@ -59,8 +59,8 @@ else:
         output2 = 'Sarcasm Detected'
     else:
         output2 = 'No Sarcasm Detected'
-    prediction2 = round(prediction2, 4)
-    prediction2 = (str(prediction2[0][0]*100))+'%'
+    prediction2 = round(prediction2[0][0], 4)
+    prediction2 = (str(prediction2*100))+'%'
     
     st.write("Prediction Accuracy (LSTM): ", prediction1)
     st.write("Prediction Accuracy (CNN): ", prediction2)
