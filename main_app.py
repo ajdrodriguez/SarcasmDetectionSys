@@ -46,7 +46,7 @@ else:
         output1 = 'Sarcasm Detected'
     else:
         output1 = 'No Sarcasm Detected'
-    prediction1 = "{:.2f} %".format(prediction1[0][0])
+    prediction1 = "{:.2f} %".format(prediction1[0][0]*100)
     
     prediction2 = model2.predict(embedded_docs)
     pred_labels2 = []
@@ -58,7 +58,7 @@ else:
         output2 = 'Sarcasm Detected'
     else:
         output2 = 'No Sarcasm Detected'
-    prediction2 = "{:.2f} %".format(prediction2[0][0])
+    prediction2 = "{:.2f} %".format(prediction2[0][0]*100)
     
     st.write("Prediction Accuracy (LSTM): ", prediction1)
     st.write("Prediction Accuracy (CNN): ", prediction2)
