@@ -9,15 +9,17 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.linear_model import LogisticRegression
 import h5py
 
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
+
 voc_size=5000
 max_sent_length = 20
 prediction1 = 0
 prediction2 = 0
 stop_words = set(nltk.corpus.stopwords.words('english'))
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('wordnet')
+
 
 def clean_text(text):
     # Remove HTML tags
