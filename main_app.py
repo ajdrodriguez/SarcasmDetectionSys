@@ -135,7 +135,7 @@ else:
     LR_data = preprocess_text(sentence)
     LR_data = nltk.word_tokenize(LR_data)
     LR_data = remove_stopwords(LR_data)
-    LR_data = vectorizer.transform(" ".join(LR_data))
+    LR_data = vectorizer.fit_transform(" ".join(LR_data))
     prediction3 = model3.predict(LR_data)
     
     for output3, label in zip(predcorpus, prediction3):
