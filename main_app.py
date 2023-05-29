@@ -10,11 +10,11 @@ prediction1 = 0
 prediction2 = 0
 
 def load_LSTM_model():
-  LSTMmodel=tf.keras.models.load_model('LSTMModel.hdf5')
+  LSTMmodel=tf.keras.models.load_model('models/LSTMModel.hdf5')
   return LSTMmodel
 
 def load_CNN_model():
-  CNNModel=tf.keras.models.load_model('cnnmodel.hdf5')
+  CNNModel=tf.keras.models.load_model('models/cnnmodel.hdf5')
   return CNNModel
 
 model1=load_LSTM_model()
@@ -71,8 +71,8 @@ st.write("")
 st.write("")
 st.markdown(
 """
-SarcasTeam Members:
-- Brent Nolie Argente
+Members:
+- Jhonlix Dave Estrañero
 - Christian John Leste Jaraula
 - Jefferson Luis Langbid
 - Andrew John Rodriguez
