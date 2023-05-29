@@ -4,6 +4,7 @@ import numpy as np
 from tensorflow.keras.preprocessing.text import one_hot
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.linear_model import LogisticRegression
+import h5py
 
 voc_size=5000
 max_sent_length = 20
