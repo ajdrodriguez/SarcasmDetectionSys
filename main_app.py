@@ -136,7 +136,6 @@ else:
     LR_data = nltk.word_tokenize(LR_data)
     LR_data = remove_stopwords(LR_data)
     LR_data = [LR_data]
-    vectorizer.fit(LR_data)
     LR_data = vectorizer.transform(" ".join(LR_data))
     prediction3 = model3.predict(LR_data)
     
