@@ -2,6 +2,7 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 import nltk
+import re
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.preprocessing.text import one_hot
